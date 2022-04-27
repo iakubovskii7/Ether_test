@@ -4,3 +4,4 @@ lxml
 bs4
 py-etherscan-api
 fake-useragent
+plotly
