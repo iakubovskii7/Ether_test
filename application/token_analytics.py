@@ -9,6 +9,7 @@ from utils import pivot_tables
 def show_token_statistics():
     st.subheader("TOKEN TRANSACTIONS STATISTICS")
     df = load_token_data_st().reset_index()
+    df['Quantity_abs'] = np.abs(df['Quantity'])
     chosen_start_time = st.date_input("Enter start date", df['DateTime'].min())
     chosen_end_time = st.date_input("Enter end date", df['DateTime'].max())
     all_methods = df['Method'].unique().tolist()
@@ -36,37 +37,69 @@ def show_token_statistics():
                                        .resample("D").sum().cumsum(),
                                        title='Nominal amount of all tokens'))
 
-    st.subheader("Physical amount of tokens through all period")
+    st.subheader("Physical amount of tokens during all period")
+    inc_out = st.selectbox("Choose type", ["Incoming", "Outgoing"])
+    if inc_out == "Incoming":
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'cETH' & To == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Compound ETH'))
 
-    st.plotly_chart(plotly_line_series(filtered_df\
-                                       .query("token == 'cETH'")\
-                                       .set_index("DateTime").resample("D")['Quantity'].sum().cumsum(),
-                    title='Compound ETH'))
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'cDAI' & To == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Compound DAI'))
 
-    st.plotly_chart(plotly_line_series(filtered_df\
-                                       .query("token == 'cDAI'")\
-                                       .set_index("DateTime").resample("D")['Quantity'].sum().cumsum(),
-                    title='Compound DAI'))
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'USDC' & To == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Stablecoin, USDC'))
 
-    st.plotly_chart(plotly_line_series(filtered_df\
-                                       .query("token == 'USDC'")\
-                                       .set_index("DateTime").resample("D")['Quantity'].sum().cumsum(),
-                    title='Stablecoin, USDC'))
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'CurveDAI' & To == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Stablecoin, CurveDAI'))
 
-    st.plotly_chart(plotly_line_series(filtered_df\
-                                       .query("token == 'CurveDAI'")\
-                                       .set_index("DateTime").resample("D")['Quantity'].sum().cumsum(),
-                    title='Stablecoin, CurveDAI'))
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'TetherUSD' & To == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Stablecoin, TetherUSD'))
 
-    st.plotly_chart(plotly_line_series(filtered_df\
-                                       .query("token == 'TetherUSD'")\
-                                       .set_index("DateTime").resample("D")['Quantity'].sum().cumsum(),
-                    title='Stablecoin, TetherUSD'))
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'DAI' & To == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Stablecoin, DAI'))
 
-    st.plotly_chart(plotly_line_series(filtered_df\
-                                       .query("token == 'DAI'")\
-                                       .set_index("DateTime").resample("D")['Quantity'].sum().cumsum(),
-                    title='Stablecoin, DAI'))
+    if inc_out == "Outgoing":
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'cETH' & From == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Compound ETH'))
+
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'cDAI' & From == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Compound DAI'))
+
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'USDC' & From == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Stablecoin, USDC'))
+
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'CurveDAI' & From == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Stablecoin, CurveDAI'))
+
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'TetherUSD' & From == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Stablecoin, TetherUSD'))
+
+        st.plotly_chart(plotly_line_series(filtered_df\
+                                           .query("token == 'DAI' & From == 'user'")\
+                                           .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
+                        title='Stablecoin, DAI'))
 
 
 
