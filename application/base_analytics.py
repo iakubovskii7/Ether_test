@@ -7,8 +7,13 @@ pd.options.display.precision = 1
 
 
 def show_base_statistics():
+    """
+    This function calculate statistics in method's and user type slices
+    :return:
+    """
     st.subheader("BASE TRANSACTIONS STATISTICS")
-    df = load_ether_data_st()
+    df = load_ether_data_st()\
+        .query("Status != 'Error(0)'")
     chosen_start_time = st.date_input("Enter start date", df['DateTime'].min())
     chosen_end_time = st.date_input("Enter end date", df['DateTime'].max())
     all_methods = df['Method'].unique().tolist()

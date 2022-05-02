@@ -28,7 +28,11 @@ contract_hash_dict = {
 }
 
 
-def load_ether_data():
+def load_ether_data() -> pd.DataFrame:
+    """
+    ETL for manually downloaded general transactions' data files
+    :return:
+    """
     data1 = pd.read_csv("data/transactions_ether/data1.csv")  # from 2022-08-04 to 2021-09-12
     data2 = pd.read_csv("data/transactions_ether/data2.csv")  # from 2021-09-12 to 2022-04-24
     new_cols = data1.reset_index().columns.tolist()
@@ -57,7 +61,11 @@ def load_ether_data():
     return df.sort_values("DateTime")
 
 
-def load_token_data():
+def load_token_data() -> pd.DataFrame:
+    """
+    ETL for manually downloaded token data files
+    :return:
+    """
     trans_token_df = []
     for file_tr_tkn in glob.glob("data/transactions_tokens/*.csv"):
         df0 = pd.read_csv(file_tr_tkn)
@@ -106,11 +114,19 @@ def load_token_data():
 
 @st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
 def load_ether_data_st():
+    """
+    Load data with cache in streamlit app
+    :return:
+    """
     return load_ether_data()
 
 
 @st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
 def load_token_data_st():
+    """
+    Load data with cache in streamlit app
+    :return:
+    """
     return load_token_data()
 
 
