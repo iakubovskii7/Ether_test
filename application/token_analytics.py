@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from plots import plotly_line_series, plotly_line_df
 from application.load_transaction_data import load_token_data_st
-from utils import pivot_tables
+from application.utils import pivot_tables
 
 
 def show_token_statistics():
