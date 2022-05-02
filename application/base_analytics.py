@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from load_transaction_data import load_ether_data_st
+from application.load_transaction_data import load_ether_data_st
 from utils import pivot_tables
 pd.options.display.precision = 1
 
