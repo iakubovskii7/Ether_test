@@ -2,7 +2,9 @@
 
 ***Main solution*** - *Solution.ipynb* file. You can read it as final solution.
 
-***Application*** - *app.py* and application folder and find according this http address: https://share.streamlit.io/iakubovskii7/ether_test/app.py
+***Application*** is based on *app.py* and *application* folder. 
+You find interactive dashboards here: https://share.streamlit.io/iakubovskii7/ether_test/app.py.
+You can choose period what you want and see updated statistics and visualisation.
 
 *Parsing.ipynb* contains stripts for data extracting from etherscan via requests and beautiful soup. 
 
