@@ -37,23 +37,15 @@ def show_token_statistics():
 
     # Bar plots
     # Plots
-    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df, 'Method', 'Value_USD', threshold_share=choose_share, plot=True)\
+    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df.query("Value_USD > 0"), 'Method', 'Value_USD', threshold_share=choose_share, plot=True)\
                                    .reset_index(),
                                    x='Share_of_total', y='Method', title='Total inflow ETH operation methods'))
 
-    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df, 'Method', 'Value_USD', threshold_share=choose_share, plot=True)\
+    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df.query("Value_USD < 0")\
+                                                .eval("Value_USD = abs(Value_USD)"), 'Method', 'Value_USD',
+                                                threshold_share=choose_share, plot=True)\
                                    .reset_index(),
                                    x='Share_of_total', y='Method', title='Total outflow ETH operation methods'))
-
-    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df.query("To == 'user'"), 'From', 'Value_USD',
-                                                threshold_share=choose_share, plot=True)\
-                                   .reset_index(),
-                                   x='Share_of_total', y='From', title='Total inflow ETH operation partners'))
-
-    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df.query("From == 'user'"), 'To', 'Value_USD',
-                                                threshold_share=choose_share, plot=True)\
-                                   .reset_index(),
-                                   x='Share_of_total', y='To', title='Total inflow ETH operation partners'))
 
     # Plot time series
     st.plotly_chart(plotly_line_series(filtered_df.set_index("DateTime")['Value_USD']\
