@@ -39,3 +39,4 @@ I highlighted 4 main periods with different strategies:
 - Investing in Bitcoin
 - Transfering crypto money between different blockchains
 - Buying stablecoins
+- Deposit in DeFi
