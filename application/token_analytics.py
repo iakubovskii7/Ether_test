@@ -23,23 +23,25 @@ def show_token_statistics():
 
     st.dataframe(filtered_df)
 
+    choose_share = st.number_input("Choose threshold for total share, %", value=1)
+
     st.text("Total amount of token in USD by token type")
-    st.table(pivot_tables(filtered_df, 'token', 'Value_USD'))
+    st.table(pivot_tables(filtered_df, 'token', 'Value_USD', threshold_share=choose_share))
 
-    st.text("Total incoming token operation methods")
-    st.table(pivot_tables(filtered_df.query("Value_USD > 0"), 'Method', 'Value_USD'))
+    st.text("Total inflow token operation methods")
+    st.table(pivot_tables(filtered_df.query("Value_USD > 0"), 'Method', 'Value_USD', threshold_share=choose_share))
 
-    st.text("Total outgoing token operation methods")
+    st.text("Total outflow token operation methods")
     st.table(pivot_tables(filtered_df.query("Value_USD < 0")\
-                          .eval("Value_USD = abs(Value_USD)"), 'Method', 'Value_USD'))
+                          .eval("Value_USD = abs(Value_USD)"), 'Method', 'Value_USD', threshold_share=choose_share))
 
     st.plotly_chart(plotly_line_series(filtered_df.set_index("DateTime")['Value_USD']\
                                        .resample("D").sum().cumsum(),
                                        title='Nominal amount of all tokens'))
 
     st.subheader("Physical amount of tokens during all period")
-    inc_out = st.selectbox("Choose type", ["Incoming", "Outgoing"])
-    if inc_out == "Incoming":
+    inc_out = st.selectbox("Choose type", ["Inflow", "Outflow"])
+    if inc_out == "Inflow":
         st.plotly_chart(plotly_line_series(filtered_df\
                                            .query("token == 'cETH' & To == 'user'")\
                                            .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
@@ -70,7 +72,7 @@ def show_token_statistics():
                                            .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),
                         title='Stablecoin, DAI'))
 
-    if inc_out == "Outgoing":
+    if inc_out == "Outflow":
         st.plotly_chart(plotly_line_series(filtered_df\
                                            .query("token == 'cETH' & From == 'user'")\
                                            .set_index("DateTime").resample("D")['Quantity_abs'].sum().cumsum(),

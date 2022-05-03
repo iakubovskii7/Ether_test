@@ -28,6 +28,9 @@ contract_hash_dict = {
 }
 
 
+token_names_df = pd.read_pickle("data/token_hash_name")
+
+
 def load_ether_data() -> pd.DataFrame:
     """
     ETL for manually downloaded general transactions' data files
@@ -110,6 +113,30 @@ def load_token_data() -> pd.DataFrame:
     token_df = token_df.set_index("DateTime")
 
     return token_df
+
+
+def load_transaction_token_df(transactions_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    :param transactions_df:
+    :return:
+    """
+    transactions_transfers_df = pd.read_pickle("data/transactions_transfers_df")
+    float_cols = ['usd', 'amount', 'transfer_amount']
+    for fl_col in float_cols:
+        transactions_transfers_df[fl_col] = pd.to_numeric(transactions_transfers_df[fl_col], errors='coerce')
+    transactions_transfers_df = transactions_transfers_df \
+        .dropna(subset=['token_hash']) \
+        .merge(token_names_df.drop(columns=['token_long_name']), on=['token_hash'], how='left') \
+        .replace({"0x99fd1378ca799ed6772fe7bcdc9b30b389518962": "user"}) \
+        .rename(columns={"from": 'From', 'to': 'To'}) \
+        .query("(From == 'user') | (To == 'user')") \
+        .merge(transactions_df[['Txhash', 'DateTime']], on=['Txhash'], how='left') \
+        .sort_values("DateTime") \
+        .assign(Quantity=lambda x: np.where(x['From'] == 'user', -x['amount'], x['amount']),
+                Value_USD=lambda x: np.where(x['From'] == 'user', -x['usd'], x['usd']))[
+         ['DateTime', 'From', 'To', 'token_short_name', 'Quantity', 'Value_USD',
+          'transfer_amount', 'transfer_from', 'transfer_to', 'Txhash', 'token_hash']]
+    return transactions_transfers_df
 
 
 @st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})

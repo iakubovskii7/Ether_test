@@ -43,30 +43,31 @@ def plotly_line_series(data, title):
     return fig_line
 
 
-def plotly_boxplot(data, x, y, title):
-    fig_box = px.box(data, x=x, y=y, points='outliers', title=title)
-    fig_box.update_layout(
-        autosize=False,
-        width=1500,
-        height=750,
-        )
-    return fig_box
+# def plotly_boxplot(data, x, y, title):
+#     fig_box = px.box(data, x=x, y=y, points='outliers', title=title)
+#     fig_box.update_layout(
+#         autosize=False,
+#         width=1500,
+#         height=750,
+#         )
+#     return fig_box
 
 
-def hist_line(data, x, y1, y2, y2_missing, title):
-    fig_pos_mot = make_subplots(specs=[[{"secondary_y": True}]])
+def two_lines(data, x, y1, y2, title):
+    plot = make_subplots(specs=[[{"secondary_y": True}]])
 
     # Add traces
-    fig_pos_mot.add_trace(
-        go.Bar(x=data[x],
-               y=data[y1].values,
-               name="ETH transactions in Quantity"),
+    plot.add_trace(
+        go.Line(x=data[x],
+                y=data[y1].values,
+                name="Outflow of tokens"),
         secondary_y=False,
     )
 
-    fig_pos_mot.add_trace(
+    plot.add_trace(
         go.Line(x=data[x],
-                y=data[y2].values, name="Tokens value in USD"),
+                y=data[y2].values,
+                name="Inflow of tokens"),
         secondary_y=True,
     )
 
@@ -77,30 +78,30 @@ def hist_line(data, x, y1, y2, y2_missing, title):
     # )
 
     # Add figure title
-    fig_pos_mot.update_layout(
+    plot.update_layout(
         title_text=f"<b>{title}<b>",
         titlefont=dict(family='Gravitas One', size=25, color='#7f7f7f')
     )
 
     # Set x-axis title
-    fig_pos_mot.update_xaxes(title_text="Time",
-                             titlefont=dict(
+    plot.update_xaxes(title_text="Time",
+                      titlefont=dict(
                                  family='Courier New, monospace',
                                  size=18,
                                  color='#7f7f7f'
                              )
-                             )
+                      )
 
     # Set y-axes titles
-    fig_pos_mot.update_yaxes(title_text="<b>ETH transactions</b> ", secondary_y=False,
-                             titlefont=dict(family='Courier New, monospace', size=18, color='#7f7f7f')
-                             )
-    fig_pos_mot.update_yaxes(title_text="<b>Cumulative token value in USD</b>", secondary_y=True,
-                             titlefont=dict(family='Courier New, monospace', size=18, color='#7f7f7f'))
-    fig_pos_mot.update_layout(
+    plot.update_yaxes(title_text="<b>OUTFLOW</b> ", secondary_y=False,
+                      titlefont=dict(family='Courier New, monospace', size=18, color='#7f7f7f')
+                      )
+    plot.update_yaxes(title_text="<b>INFLOW</b>", secondary_y=True,
+                      titlefont=dict(family='Courier New, monospace', size=18, color='#7f7f7f'))
+    plot.update_layout(
         autosize=False,
         width=1500,
         height=600, )
 
-    return fig_pos_mot
+    return plot
 

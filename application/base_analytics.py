@@ -28,18 +28,19 @@ def show_base_statistics():
                               ]].set_index("DateTime").style.format(
         {col: '{:.1f}' for col in filtered_df.select_dtypes(exclude="object")})
     )
+    # Choose threshold for total share
+    choose_share = st.number_input("Choose threshold for total share, %", value=1)
+    st.text("Total inflow ETH operation methods")
+    st.table(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)', threshold_share=choose_share))
 
-    st.text("Total incoming ETH operation methods")
-    st.table(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)'))
+    st.text("Total outflow ETH operation methods")
+    st.table(pivot_tables(filtered_df, 'Method', 'Value_OUT(ETH)', threshold_share=choose_share))
 
-    st.text("Total outgoing ETH operation methods")
-    st.table(pivot_tables(filtered_df, 'Method', 'Value_OUT(ETH)'))
+    st.text("Total inflow ETH operation partners")
+    st.table(pivot_tables(filtered_df.query("To == 'user'"), "From", "Value_IN(ETH)", threshold_share=choose_share))
 
-    st.text("Total incoming ETH operation partners")
-    st.table(pivot_tables(filtered_df.query("To == 'user'"), "From", "Value_IN(ETH)"))
-
-    st.text("Total outgoing ETH operation partners")
-    st.table(pivot_tables(filtered_df.query("From == 'user'"), "To", "Value_OUT(ETH)"))
+    st.text("Total outflow ETH operation partners")
+    st.table(pivot_tables(filtered_df.query("From == 'user'"), "To", "Value_OUT(ETH)", threshold_share=choose_share))
 
 
 
