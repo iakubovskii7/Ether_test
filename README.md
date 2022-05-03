@@ -27,3 +27,10 @@ I highlighted 4 main periods with different strategies:
 3. Oct 2021 - Jan 2022. Value of tokens in USD was about around 0-50 mln dollars that correspondence with minimal historical period amount.
 4. Feb 2022 - Now. User incredibly increased his tokens in USD value.
 
+***Main actions were***:
+
+- Adding liquidity to different Pools
+- Borrowing via Compound contract
+- Investing in Bitcoin
+- Transfering crypto money between different blockchains
+- Buying staiblecoins
