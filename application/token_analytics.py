@@ -39,13 +39,13 @@ def show_token_statistics():
     # Plots
     st.plotly_chart(plotly_barplot(pivot_tables(filtered_df.query("Value_USD > 0"), 'Method', 'Value_USD', threshold_share=choose_share, plot=True)\
                                    .reset_index(),
-                                   x='Share_of_total', y='Method', title='Total inflow ETH operation methods'))
+                                   x='Share_of_total', y='Method', title='Total inflow tokens operation methods'))
 
     st.plotly_chart(plotly_barplot(pivot_tables(filtered_df.query("Value_USD < 0")\
                                                 .eval("Value_USD = abs(Value_USD)"), 'Method', 'Value_USD',
                                                 threshold_share=choose_share, plot=True)\
                                    .reset_index(),
-                                   x='Share_of_total', y='Method', title='Total outflow ETH operation methods'))
+                                   x='Share_of_total', y='Method', title='Total outflow tokens operation methods'))
 
     # Plot time series
     st.plotly_chart(plotly_line_series(filtered_df.set_index("DateTime")['Value_USD']\
