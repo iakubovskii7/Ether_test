@@ -24,7 +24,7 @@ layout = go.Layout(
 
 
 def plotly_barplot(data, x, y, title):
-    fig_bar = px.bar(data, x=x, y=y, orientation='h')
+    fig_bar = px.bar(data, x=x, y=y, orientation='h', title=title)
     fig_bar.update_layout(
         autosize=False,
         width=1200,

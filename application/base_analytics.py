@@ -31,10 +31,8 @@ def show_base_statistics():
     )
     # Choose threshold for total share
     choose_share = st.number_input("Choose threshold for total share, %", value=1)
-    # st.text("Total inflow ETH operation methods")
-    # st.table(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)', threshold_share=choose_share))
-    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)', threshold_share=choose_share),
-                                   x='Method', y='Share_of_total', title='Total inflow ETH operation methods'))
+    st.text("Total inflow ETH operation methods")
+    st.table(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)', threshold_share=choose_share))
 
     st.text("Total outflow ETH operation methods")
     st.table(pivot_tables(filtered_df, 'Method', 'Value_OUT(ETH)', threshold_share=choose_share))
@@ -44,6 +42,25 @@ def show_base_statistics():
 
     st.text("Total outflow ETH operation partners")
     st.table(pivot_tables(filtered_df.query("From == 'user'"), "To", "Value_OUT(ETH)", threshold_share=choose_share))
+
+    # Plots
+    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)', threshold_share=choose_share, plot=True)\
+                                   .reset_index(),
+                                   x='Share_of_total', y='Method', title='Total inflow ETH operation methods'))
+
+    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df, 'Method', 'Value_OUT(ETH)', threshold_share=choose_share, plot=True)\
+                                   .reset_index(),
+                                   x='Share_of_total', y='Method', title='Total outflow ETH operation methods'))
+
+    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df.query("To == 'user'"), 'From', 'Value_IN(ETH)',
+                                                threshold_share=choose_share, plot=True)\
+                                   .reset_index(),
+                                   x='Share_of_total', y='From', title='Total inflow ETH operation partners'))
+
+    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df.query("From == 'user'"), 'To', 'Value_OUT(ETH)',
+                                                threshold_share=choose_share, plot=True)\
+                                   .reset_index(),
+                                   x='Share_of_total', y='To', title='Total inflow ETH operation partners'))
 
 
 
