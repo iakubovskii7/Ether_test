@@ -1,2 +1,2 @@
-requirements.in
-.ipynb_checkpoints
+!/requirements.in
+!/.ipynb_checkpoints/
