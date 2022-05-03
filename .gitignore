@@ -1,2 +1,6 @@
 !/requirements.in
 !/.ipynb_checkpoints/
+
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
