@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from application.load_transaction_data import load_ether_data_st
 from application.utils import pivot_tables
+from application.plots import plotly_barplot
 pd.options.display.precision = 1
 
 
@@ -30,8 +31,10 @@ def show_base_statistics():
     )
     # Choose threshold for total share
     choose_share = st.number_input("Choose threshold for total share, %", value=1)
-    st.text("Total inflow ETH operation methods")
-    st.table(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)', threshold_share=choose_share))
+    # st.text("Total inflow ETH operation methods")
+    # st.table(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)', threshold_share=choose_share))
+    st.plotly_chart(plotly_barplot(pivot_tables(filtered_df, 'Method', 'Value_IN(ETH)', threshold_share=choose_share),
+                                   x='Method', y='Share_of_total', title='Total inflow ETH operation methods'))
 
     st.text("Total outflow ETH operation methods")
     st.table(pivot_tables(filtered_df, 'Method', 'Value_OUT(ETH)', threshold_share=choose_share))

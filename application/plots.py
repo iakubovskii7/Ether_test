@@ -23,6 +23,15 @@ layout = go.Layout(
 )
 
 
+def plotly_barplot(data, x, y, title):
+    fig_bar = px.bar(data, x=x, y=y, orientation='h')
+    fig_bar.update_layout(
+        autosize=False,
+        width=1200,
+        height=500, )
+    return fig_bar
+
+
 def plotly_line_df(data, x, y, title):
     fig_line = px.line(data,
                        x=x, y=y,
@@ -41,16 +50,6 @@ def plotly_line_series(data, title):
         width=1000,
         height=400, )
     return fig_line
-
-
-# def plotly_boxplot(data, x, y, title):
-#     fig_box = px.box(data, x=x, y=y, points='outliers', title=title)
-#     fig_box.update_layout(
-#         autosize=False,
-#         width=1500,
-#         height=750,
-#         )
-#     return fig_box
 
 
 def two_lines(data, x, y1, y2, title):
