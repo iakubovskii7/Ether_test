@@ -1,12 +1,9 @@
 import streamlit as st
 st.set_page_config(layout="wide")
 from application.login import is_authenticated, clean_blocks, generate_login_block, login
-from application.load_transaction_data import load_ether_data_st, load_token_data_st
 from application.base_analytics import show_base_statistics
 from application.token_analytics import show_token_statistics
 from application.token_detailed import show_detailed_token_statistics
-import pandas as pd
-import numpy as np
 
 
 def main():
