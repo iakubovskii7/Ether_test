@@ -6,6 +6,11 @@
 You find interactive dashboards here: https://share.streamlit.io/iakubovskii7/ether_test/app.py.
 You can choose period what you want and see updated statistics and visualisation.
 
+Dashboard has three parts: 
+- Base analytics
+- Token analytics
+- Detailed token analytics
+
 *Parsing.ipynb* contains stripts for data extracting from etherscan via requests and beautiful soup. 
 
 If you want to run stripts by yourself - clone repository and install packages from *requirements.txt*.
