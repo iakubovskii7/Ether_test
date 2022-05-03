@@ -38,4 +38,5 @@ I highlighted 4 main periods with different strategies:
 - Borrowing via Compound contract
 - Investing in Bitcoin
 - Transfering crypto money between different blockchains
-- Buying staiblecoins
+- Buying stablecoins
+- Deposit in DeFi
