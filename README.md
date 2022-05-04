@@ -13,7 +13,7 @@ Dashboard has three parts:
 
 *Parsing.ipynb* contains stripts for data extracting from etherscan via requests and beautiful soup. 
 
-If you want to run stripts by yourself - clone repository and install packages from *requirements.txt*.
+If you want to run stripts by yourself - clone repository and install packages from *requirements.txt* for Python 3.8.
 
 All downloaded data is storaged in *data* folder.
 
