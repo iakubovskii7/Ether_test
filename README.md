@@ -4,7 +4,7 @@
 
 ***Application*** is based on *app.py* and *application* folder. 
 You find interactive dashboards here: https://share.streamlit.io/iakubovskii7/ether_test/app.py.
-You can choose period what you want and see updated statistics and visualisation.
+You can choose period what you want and see updated statistics and visualisation. Also you can run application manually via *streamlit run app.py* in terminal.
 
 Dashboard has three parts: 
 - Base analytics
